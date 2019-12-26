@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_report_balance,vit.report_balance,model_vit_report_balance,,1,1,1,1
+access_vit_report_balance_so,vit.report_balance_so,model_vit_report_balance_so,,1,1,1,1
+access_vit_report_balance_wip,vit.report_balance_wip,model_vit_report_balance_wip,,1,1,1,1

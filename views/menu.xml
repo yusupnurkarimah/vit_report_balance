@@ -1,0 +1,13 @@
+<odoo>
+	<data>
+		<menuitem id="report_balance_top_menu"
+			name="Report Balance"
+			sequence="20"/>
+		
+		<menuitem id="report_balance_sub_menu"
+			name="Report Balance"
+			sequence="20"
+			parent="report_balance_top_menu"
+			action="action_vit_report_balance"/>
+	</data>
+</odoo>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- List View -->
+		<record model="ir.ui.view" id="vit_report_balance_tree">
+			<field name="name">vit_report_balance_tree</field>
+			<field name="model">vit.report_balance</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Report Balance">
+					<field name="name_report"/>
+					<field name="name"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+				</tree>
+			</field>
+		</record>
+		
+		<!-- Form View -->
+		<record model="ir.ui.view" id="vit_report_balance_form">
+			<field name="name">vit_report_balance_form</field>
+			<field name="model">vit.report_balance</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Report Balance">
+					<header>
+						<button string="Generate report" type="object" class="oe_highlight" name="generate_master" />
+						<button string="Export Excel" type="object" class="oe_highlight" name="export_excel" />
+					</header>
+					<sheet>
+
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" string="Report Balance Name"/>
+							<h1><field name="name"/></h1>
+						</div>
+
+						<group>
+							<field name="date_start"/>
+							<field name="date_end"/>
+							<field name="company_id"/>
+							<field name="name_report"/>
+						</group>
+
+						<notebook>
+							<page string="Report Balance SO" attrs="{'invisible': [('name_report', '!=', 'Report Balance SO')]}">
+								<field name="report_so_ids"> 
+									<tree string="Report balance SO">
+										<field name="product_id" />
+										<field name="product_code" />
+										<field name="total_so_bln_lalu" />
+										<field name="total_so_bln_ini" />
+										<field name="onhand" />
+										<field name="heading" />
+										<field name="rolling" />
+										<field name="furnace" />
+										<field name="plating" />
+										<field name="fq" />
+										<field name="wip_onhand" />
+										<field name="balance_so" />
+									</tree>
+								</field>
+							</page>
+							<page string="Report Balance WIP"  attrs="{'invisible': [('name_report', '!=', 'Report Balance WIP')]}">
+								<field name="report_wip_ids">
+									<tree string="Report balance WIP">
+										<field name="product_code" />
+										<field name="product_id" />
+										<field name="onhand" />
+										<field name="heading" />
+										<field name="rolling" />
+										<field name="furnace" />
+										<field name="plating" />
+										<field name="fq" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- search -->
+		<record id="view_vit_report_balance_search" model="ir.ui.view">
+			<field name="name">vit_report_balance</field>
+			<field name="model">vit.report_balance</field>
+			<field name="arch" type="xml">
+				<search string="Report balance">
+
+					<filter string="Date start" name="filter_by_date_start" domain="[('date_start','=','')]" />
+					<filter string="Date end" name="filter_by_date_end" domain="[('date_end','=','')]" />
+					<filter string="Name" name="filter_by_name" domain="[('name','=','')]" />
+					<field name="date_start" select="True"/>
+					<field name="date_end" select="True"/>
+					<field name="name" select="True"/>
+					<group string="Group By..">
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- kanban , to show image, please add image_small in the model -->
+		<record id="view_vit_report_balance_kanban" model="ir.ui.view" >
+			<field name="name">vit_report_balance</field>
+			<field name="model">vit.report_balance</field>
+			<field name="arch" type="xml">
+				<kanban version="7.0">
+					<field name="id" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="name" />
+					<templates>
+						<t t-name="kanban-box">
+							<div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+								<div class="oe_kanban_details">
+									<h4>
+										<a type="open"><field name="name"/></a>
+									</h4>
+									<ul>
+										<li>
+											Date Start = <field name="date_start" />
+										</li>
+										<li>
+											Date End = <field name="date_end" />
+										</li>
+										<li>
+											Company = <field name="company_id" />
+										</li>
+									</ul>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+		<!-- calendar if a date field exists -->
+		<record id="view_vit_report_balance_cal" model="ir.ui.view">
+			<field name="name">vit_report_balance_cal</field>
+			<field name="model">vit.report_balance</field>
+			<field name="arch" type="xml">
+				<calendar string="Report balance" date_start="date_end">
+					<field name="name" />
+				</calendar>
+			</field>
+		</record>
+
+		<!-- graph -->
+		<record id="view_vit_report_balance_graph" model="ir.ui.view">
+			<field name="name">vit_report_balance</field>
+			<field name="model">vit.report_balance</field>
+			<field name="arch" type="xml">
+				<graph string="Report balance" type="bar">
+				</graph>
+			</field>
+		</record>
+
+		<!-- action window -->
+		<record id="action_vit_report_balance" model="ir.actions.act_window">
+			<field name="name">Report balance</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">vit.report_balance</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form,calendar,graph</field>
+			<field name="context">{"search_default_fieldname":1}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				Click to add a new Report balance
+				</p><p>
+				Click the Create button to add a new Report balance
+				</p>
+			</field>
+		</record>
+		
+	</data>
+</odoo>
